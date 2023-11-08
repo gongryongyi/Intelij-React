@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3294ea21-2dc0-42a6-96a9-4c42b711f6fe" name="변경" comment="">
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/mock/db.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/1.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/10.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/11.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/12.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/13.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/14.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/15.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/16.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/17.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/18.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/19.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/2.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/20.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/21.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/3.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/4.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/5.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/6.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/7.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/8.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/images/9.PNG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/App.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/components/api/Api.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/components/api/MenuAPICalls.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/components/commons/Header.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/components/commons/Navbar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/components/item/MenuItem.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/components/list/MenuList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/layout/Layout.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/modules/MenuModules.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/modules/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/pages/Main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/pages/Menus.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chap03-redux-project-structure/src/store.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 7
+}]]></component>
+  <component name="ProjectId" id="2XsvDCvVklB7br1RpNtKIA3LVGA" />
+  <component name="ProjectViewState">
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "C:/Lecture/react/lecture-source",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="애플리케이션 수준" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="디폴트 작업">
+      <changelist id="3294ea21-2dc0-42a6-96a9-4c42b711f6fe" name="변경" comment="" />
+      <created>1699430480037</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699430480037</updated>
+      <workItem from="1699430481162" duration="66000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
