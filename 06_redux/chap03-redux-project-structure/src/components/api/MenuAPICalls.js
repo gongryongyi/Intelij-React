@@ -1,5 +1,5 @@
 import {request} from "./Api";
-import {getMenulist} from "../../modules/MenuModules";
+import {getMenu, getMenulist} from "../../modules/MenuModules";
 
 export function callGetMenuListAPI(){
     /* 반환 되는 비동기 처리 함수가 dispatch의 매개변수로 전달 되면
@@ -12,5 +12,19 @@ export function callGetMenuListAPI(){
         /* API 호출을 통해 반환 받은 데이터를 Store에 저장하기 위해
         * 다시 dispatch(action객체) 를 호출한다. */
         dispatch(getMenulist(result));
+        // getMenulist = [GET_MENULIST] : (result) => ({menuList : result}) 여기에다가 result를 넣겠다.
+    }
+
+}
+
+export function callGetMenuAPI(id){
+
+    return async (dispatch, getState) => {
+        const result = await request('GET', `/menu/${id}`);
+
+        console.log("getMenu result :", result);
+
+
+        dispatch(getMenu(result));
     }
 }
