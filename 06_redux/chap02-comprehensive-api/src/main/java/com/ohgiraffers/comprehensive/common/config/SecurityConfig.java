@@ -1,19 +1,38 @@
 package com.ohgiraffers.comprehensive.common.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ohgiraffers.comprehensive.jwt.service.JwtService;
+import com.ohgiraffers.comprehensive.login.filter.CustomUsernamePasswordAuthenticationFilter;
+import com.ohgiraffers.comprehensive.login.handler.LoginFailureHandler;
+import com.ohgiraffers.comprehensive.login.handler.LoginSuccessHandler;
+import com.ohgiraffers.comprehensive.login.service.LoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 @EnableWebSecurity
-
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final ObjectMapper objectMapper;
+    private final LoginService loginService;
+    private final JwtService jwtService;
+
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -31,11 +50,18 @@ public class SecurityConfig {
                 //이때 OPTIONS 메서드로 서버에 사전 요청을 보내 권한을 확인함
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()  //(method , url).pattern
                 .antMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
+                .antMatchers("/member/signup").permitAll()
+                .antMatchers("/api/v1/product-management/**", "/api/v1/products/**").hasRole("ADMIN")
+                .anyRequest().authenticated()  //anyRequest 그 외 모든 요청은 인정되어야 한다.
                 .and()
+                //로그인 필터 설정
+                .addFilterBefore(customUsernamePasswordAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                // customUsernamePasswordAuthenticationFilter로그인시 동작할 필터를 UsernamePasswordAuthenticationFilter 이 필터 앞에다가 끼워 넣겠다
                 //교차 출처 자원 공유 설정
                 .cors() //아래 설정해놓음 corsConfigurationSource
                 .and()
                 .build();
+
     }
     /* CORS(Cross Origin Resource Sharing) : 교차 출처 자원 공유
     * 보안상 웹 브라우저는 다른 도메인에서 서버의 자우너을 요청하는 경우 막아 놓았음
@@ -57,4 +83,50 @@ public class SecurityConfig {
 
         return source;
     }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();  //적절한 보안 수준을 가지고 있는 친구이기 때문에 사용 random salting처리 한다
+
+    }
+
+    /* 인증 매니저 빈 등록
+     => 로그인 시 사용할 password encode 설정, 로그인 시 유저 조회하는 메소드를
+    * 가진 Service 클래스 설정 */
+    @Bean
+    public AuthenticationManager authenticationManager(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());   //비밀번호가 맍는지 채킹한다.
+        provider.setUserDetailsService(loginService);
+        return new ProviderManager(provider);
+    }
+
+    // 이거 다시 설명 듣기
+
+    /* 로그인 실패 핸들러 빈 등록 */
+    @Bean
+    public LoginFailureHandler loginFailureHandler(){
+        return new LoginFailureHandler(objectMapper);
+    }
+
+    /* 로그인 성공 핸들러 빈 등록 */
+    @Bean
+    public LoginSuccessHandler loginSuccessHandler(){return new LoginSuccessHandler(jwtService);}
+
+
+    /* 로그인 필터 빈 등록 */
+    @Bean
+    public CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter(){
+        CustomUsernamePasswordAuthenticationFilter customUsernamePasswordAuthenticationFilter
+                = new CustomUsernamePasswordAuthenticationFilter(objectMapper);
+        /* 사용할 인증 매니저 설정 */
+        customUsernamePasswordAuthenticationFilter.setAuthenticationManager(authenticationManager());
+        /* 로그인 실패 핸들링 */
+        customUsernamePasswordAuthenticationFilter.setAuthenticationFailureHandler(loginFailureHandler());
+        /* 로그인 성공 핸들링 */
+        customUsernamePasswordAuthenticationFilter.setAuthenticationSuccessHandler(loginSuccessHandler());
+        return customUsernamePasswordAuthenticationFilter;
+    }
+
+
 }
