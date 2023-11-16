@@ -11,12 +11,22 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -91,6 +101,17 @@ public class JwtService {
                 .map(refreshToken -> refreshToken.replace(BEARER, ""));  //여기를 탈꺼다 그리고 없으면 null 반환
     }
 
+
+    public Optional<String> getAccessToken(HttpServletRequest request) {
+        return Optional.ofNullable(request.getHeader("Access-Token"))
+                .filter(accessToken -> accessToken.startsWith(BEARER))  // 있으면 filtering 할꺼고 bearer(토근의 종류)이 true면
+                .map(refreshToken -> refreshToken.replace(BEARER, ""));  //여기를 탈꺼다 그리고 없으면 null 반환
+        //BEARER 제거해서 반환하겠다. "BEARERXXXXX" 상태에서
+    }
+
+
+
+
     public boolean isValidToken(String token) { //token = 추출된 문자열
 
         try {
@@ -125,4 +146,53 @@ public class JwtService {
         memberRepository.saveAndFlush(member);  //saveAndFlush = 바로 이순간 DB쪽으로 내보낸다
         return reIssuedRefreshToken;
     }
+
+    public void checkAccessTokenAndAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        getAccessToken(request)
+                .filter(this::isValidToken)
+                .ifPresent(accessToken -> getMemberId(accessToken)//만약 유효하다면
+                        .ifPresent(memberId -> memberRepository.findByMemberId(memberId)//멤버 아이디가 있으면 반환함
+                                .ifPresent(this::saveAuthentication)//멤버 엔티티가 있으면 //중간에 문제가 없으면 여기까지 도달할 수 있음
+                        )
+                );
+
+        filterChain.doFilter(request,response);
+
+    }
+
+    private Optional<String> getMemberId(String accessToken) {
+
+        try{
+           return Optional.ofNullable(
+                   Jwts.parserBuilder()// 여기서 파싱처리를 할수 있는 객체 처리
+                           .setSigningKey(key)// 파싱할때 사용할 서명 키
+                           .build()//파싱을 할수 있도록 JWTParser을 불러왔고
+                           .parseClaimsJws(accessToken)// accessToken 부터 해당 정보를 파싱
+                           .getBody()  // get에 파싱처리 할게 없으면 null로 처리?
+                           .get("memberId").toString()  //getBody 에서 memberId 가져옴
+           );
+        }catch (Exception e){
+            log.error("Access Token이 유효하지 않습니다.");
+            return Optional.empty();
+        }
+    }
+
+    public void saveAuthentication(Member member){
+
+        UserDetails userDetails = User.builder()
+                .username(member.getMemberId())
+                .password(member.getMemberPassword())
+                .roles(member.getMemberRole().name())
+                .build();
+
+        Authentication authentication
+                = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
+    }
+
+
+
 }

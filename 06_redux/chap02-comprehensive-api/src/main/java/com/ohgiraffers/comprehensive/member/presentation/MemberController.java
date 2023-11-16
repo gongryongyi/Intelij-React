@@ -1,20 +1,20 @@
-package com.ohgiraffers.comprehensive.member.controller;
+package com.ohgiraffers.comprehensive.member.presentation;
 
 import com.ohgiraffers.comprehensive.member.dto.request.MemberSignupRequest;
+import com.ohgiraffers.comprehensive.member.dto.response.ProfileResponse;
 import com.ohgiraffers.comprehensive.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping({"/member", "/api/v1/member"})
 @RequiredArgsConstructor // 생성자 자동으로 만듬
 public class MemberController {
 
@@ -30,6 +30,16 @@ public class MemberController {
         memberService.signup(memberRequest);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    /* 2. 프로필 조회 */
+    ///api/v1/member -> GetMapping  인증되면 처리한다
+    @GetMapping
+    public ResponseEntity<ProfileResponse> profile(@AuthenticationPrincipal User user){
+
+        ProfileResponse profileResponse = memberService.getprofile(user.getUsername());
+
+        return ResponseEntity.ok(profileResponse);
     }
 
 }
