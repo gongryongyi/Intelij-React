@@ -24,7 +24,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        //authentication 저장한 인증 객체                                                       // 민서야 FilterChain chain 이거 지우면 동작할거얌
+        //authentication 저장한 인증 객체   로그인했을때 세팅한 정보?
         /* 로그인 성공 후 저장 된 인증 객체에서 정보를 꺼낸다. */
         Map<String, String> memberInfo = getMemberInfo(authentication);
         log.info("로그인 성공 후 인증 객체에서 꺼낸 정보 : {}", memberInfo);

@@ -97,4 +97,8 @@ public class Product {
         this.productStock = productStock;
         this.status = status;
     }
+
+    public void updateStock(Long orderAmount) {
+        productStock -= orderAmount;
+    }
 }

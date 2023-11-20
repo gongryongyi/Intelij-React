@@ -2,6 +2,8 @@ package com.ohgiraffers.comprehensive.jwt.service;
 
 
 import com.ohgiraffers.comprehensive.common.exception.BadRequestException;
+import com.ohgiraffers.comprehensive.common.exception.NotFoundException;
+import com.ohgiraffers.comprehensive.jwt.CustomUser;
 import com.ohgiraffers.comprehensive.member.domain.Member;
 import com.ohgiraffers.comprehensive.member.domain.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
@@ -87,7 +89,7 @@ public class JwtService {
                 .ifPresentOrElse(  //ifPresent만약 있으면 member -> member.updateRefreshToken(refreshToken) 이렇게
                         // 없으면 OrElse () -> new BadRequestException(NOT_FOUND_MEMBER_ID) 이렇게 익셉션 발생시키겠다.
                         member -> member.updateRefreshToken(refreshToken),
-                        () -> new BadRequestException(NOT_FOUND_MEMBER_ID)
+                        () -> new NotFoundException(NOT_FOUND_MEMBER_ID)
                 );
 
 
@@ -185,10 +187,12 @@ public class JwtService {
                 .roles(member.getMemberRole().name())
                 .build();
 
-        Authentication authentication
-                = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        CustomUser coustomUser = CustomUser.of(member.getMemberCode(), userDetails);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication
+                = new UsernamePasswordAuthenticationToken(coustomUser, null, userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);  //인증 객체로써 authentication를 사용한다.
 
 
     }

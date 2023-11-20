@@ -68,6 +68,7 @@ public class SecurityConfig {
                 //클라이언트가 외부 도메인을 요청하는 경우 웹 브라우저에서 자테적으로 사전 요청(preflight)이 일어남
                 //이때 OPTIONS 메서드로 서버에 사전 요청을 보내 권한을 확인함
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()  //(method , url).pattern
+                .antMatchers(HttpMethod.GET, "/productimgs/**").permitAll() //이미지 보이게 하는거임
                 .antMatchers(HttpMethod.GET, "/api/v1/products/**").permitAll()
                 .antMatchers("/member/signup").permitAll()
                 .antMatchers("/api/v1/products-management/**", "/api/v1/products/**").hasRole("ADMIN")  //ADMIN 이라는걸 인증되어야 한다.

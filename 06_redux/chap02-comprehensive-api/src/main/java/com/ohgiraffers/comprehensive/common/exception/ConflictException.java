@@ -4,10 +4,10 @@ import com.ohgiraffers.comprehensive.common.exception.type.ExceptionCode.Excepti
 import lombok.Getter;
 
 @Getter
-public class BadRequestException extends CustomException{
+public class ConflictException extends  CustomException{
 
-    public BadRequestException(final ExceptionCode exceptionCode){
+    public ConflictException(final ExceptionCode exceptionCode){
         super(exceptionCode);
-
     }
+
 }

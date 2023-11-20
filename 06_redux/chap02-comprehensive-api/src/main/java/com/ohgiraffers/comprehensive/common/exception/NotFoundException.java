@@ -1,13 +1,12 @@
 package com.ohgiraffers.comprehensive.common.exception;
 
 import com.ohgiraffers.comprehensive.common.exception.type.ExceptionCode.ExceptionCode;
-import lombok.Getter;
+import org.aspectj.weaver.ast.Not;
 
-@Getter
-public class BadRequestException extends CustomException{
+public class NotFoundException extends CustomException{
 
-    public BadRequestException(final ExceptionCode exceptionCode){
+    public NotFoundException(final ExceptionCode exceptionCode){
         super(exceptionCode);
-
     }
+
 }
